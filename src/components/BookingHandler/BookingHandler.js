@@ -52,25 +52,45 @@ class BookingHandler extends Component {
   }
 
   handleAdults = (method, rooms, adults, children) => {
+    let totalGuests = adults + children
+
     if (method === "add") {
       adults++
-      if (adults > rooms * 4) {
+      totalGuests++
+      if (totalGuests > rooms * 4) {
+      console.log('hi')
+
         rooms++
       }
     } else {
       adults--
+      totalGuests--
+      let maxStrength = (rooms - 1) * 4
+      if (totalGuests <= maxStrength) {
+        rooms--
+      }
     }
     this.setState({ rooms, adults })
   }
 
   handleChildren = (method, rooms, adults, children) => {
+    let totalGuests = adults + children
+    let maxStrength = rooms * 4
     if (method === "add") {
-      children++
+      if (totalGuests < maxStrength) {
+        children++
+      }
     } else {
       children--
+      let nextMaxStrength  = (rooms - 1) * 4
+      if (totalGuests <= nextMaxStrength) {
+        rooms--
+      }
     }
     this.setState({ children })
   }
+
+
 
   updateBookings = val => {
     console.log(val)
@@ -93,9 +113,9 @@ class BookingHandler extends Component {
       <div className={styles.bookingHandler}>
         <TypeView Img={data[0].img} type={data[0].name} updateBookings={this.updateBookings} count={rooms} />
         <hr />
-        <TypeView Img={data[1].img} type={data[1].name} updateBookings={this.updateBookings} count={adults} />
+        <TypeView Img={data[1].img} type={data[1].name} updateBookings={this.updateBookings} count={adults} totalStrength={adults+children}/>
         <hr />
-        <TypeView Img={data[2].img} type={data[2].name} updateBookings={this.updateBookings} count={children} />
+        <TypeView Img={data[2].img} type={data[2].name} updateBookings={this.updateBookings} count={children} totalStrength={adults+children}/>
       </div>
     )
   }
