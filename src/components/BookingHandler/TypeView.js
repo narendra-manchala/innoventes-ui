@@ -34,7 +34,7 @@ const TypeView = (props) => {
         > 
           <FaMinusCircle /> 
         </Button>
-        <span style={{ fontSize: '20px', color: "black" }}>{count}</span>
+        <span style={{ fontSize: '20px', color: "black", width: "35px", textAlign: "center" }}>{count}</span>
         <Button 
           color="blue" 
           onClick={handleClick("add")} 
