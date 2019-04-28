@@ -58,7 +58,7 @@ class BookingHandler extends Component {
       adults++
       totalGuests++
       if (totalGuests > rooms * 4) {
-      console.log('hi')
+        console.log('hi')
 
         rooms++
       }
@@ -69,8 +69,18 @@ class BookingHandler extends Component {
       if (totalGuests <= maxStrength) {
         rooms--
       }
+      if (rooms > adults) {
+        rooms = adults
+        if (totalGuests > rooms * 4) {
+          children = children - (totalGuests - (rooms * 4))
+        }
+      }
+      if (adults === 0) {
+        rooms = 0
+        children = 0
+      }
     }
-    this.setState({ rooms, adults })
+    this.setState({ rooms, adults, children })
   }
 
   handleChildren = (method, rooms, adults, children) => {
@@ -82,7 +92,7 @@ class BookingHandler extends Component {
       }
     } else {
       children--
-      let nextMaxStrength  = (rooms - 1) * 4
+      let nextMaxStrength = (rooms - 1) * 4
       if (totalGuests <= nextMaxStrength) {
         rooms--
       }
@@ -111,11 +121,29 @@ class BookingHandler extends Component {
 
     return (
       <div className={styles.bookingHandler}>
-        <TypeView Img={data[0].img} type={data[0].name} updateBookings={this.updateBookings} count={rooms} />
+        <TypeView 
+          Img={data[0].img} 
+          type={data[0].name} 
+          updateBookings={this.updateBookings} 
+          count={rooms} 
+        />
         <hr />
-        <TypeView Img={data[1].img} type={data[1].name} updateBookings={this.updateBookings} count={adults} totalStrength={adults+children}/>
+        <TypeView 
+          Img={data[1].img} 
+          type={data[1].name} 
+          updateBookings={this.updateBookings} 
+          count={adults} 
+          totalStrength={adults + children} 
+        />
         <hr />
-        <TypeView Img={data[2].img} type={data[2].name} updateBookings={this.updateBookings} count={children} totalStrength={adults+children}/>
+        <TypeView 
+          Img={data[2].img} 
+          type={data[2].name} 
+          updateBookings={this.updateBookings} 
+          count={children} 
+          totalStrength={adults + children}
+          maxStrengthReached={(adults+children) === rooms*4 }
+        />
       </div>
     )
   }
