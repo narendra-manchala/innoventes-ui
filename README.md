@@ -1,11 +1,12 @@
 ### `Clone and install the app`
 
-```git clone https://github.com/narendra67/innoventes-ui.git```
+1. ```git clone https://github.com/narendra67/innoventes-ui.git```
 
-```cd innoventes-ui```
-```npm install```
+2. ```cd innoventes-ui```
 
-### `npm start`
+3. ```npm install```
+
+4. ```npm start```
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
