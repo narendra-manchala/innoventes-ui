@@ -27,8 +27,63 @@ class BookingHandler extends Component {
     children: 0
   }
 
+  handleRooms = (method, rooms, adults, children) => {
+    if (method === "add") {
+      rooms++
+      if (adults < rooms) {
+        adults = rooms
+      }
+    } else {
+      rooms--
+      const maxStrength = rooms * 4
+      const totalGuests = adults + children
+      if (totalGuests > maxStrength) {
+        let diff = totalGuests - maxStrength
+        if (diff > children) {
+          diff = diff - children
+          children = 0
+          adults = adults - diff
+        } else {
+          children = children - diff
+        }
+      }
+    }
+    this.setState({ rooms, adults, children })
+  }
+
+  handleAdults = (method, rooms, adults, children) => {
+    if (method === "add") {
+      adults++
+      if (adults > rooms * 4) {
+        rooms++
+      }
+    } else {
+      adults--
+    }
+    this.setState({ rooms, adults })
+  }
+
+  handleChildren = (method, rooms, adults, children) => {
+    if (method === "add") {
+      children++
+    } else {
+      children--
+    }
+    this.setState({ children })
+  }
+
   updateBookings = val => {
     console.log(val)
+    let rooms = this.state.rooms
+    let adults = this.state.adults
+    let children = this.state.children
+    if (val.type === "ROOMS") {
+      this.handleRooms(val.method, rooms, adults, children)
+    } else if (val.type === "ADULTS") {
+      this.handleAdults(val.method, rooms, adults, children)
+    } else {
+      this.handleChildren(val.method, rooms, adults, children)
+    }
   }
 
   render() {
