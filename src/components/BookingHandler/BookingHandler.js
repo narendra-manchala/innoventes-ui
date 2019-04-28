@@ -21,19 +21,26 @@ const data = [
 ]
 
 class BookingHandler extends Component {
-  render() {
+  state = {
+    rooms: 0,
+    adults: 0,
+    children: 0
+  }
 
-    let bookingFields = data.map((item, index) => (
-      <>
-      <TypeView Img={item.img} type={item.name} />
-      {index < data.length - 1 && <hr />} 
-      </>
-    ))
+  updateBookings = val => {
+    console.log(val)
+  }
+
+  render() {
+    const { rooms, adults, children } = this.state
+
     return (
       <div className={styles.bookingHandler}>
-    
-      {bookingFields}
-        
+        <TypeView Img={data[0].img} type={data[0].name} updateBookings={this.updateBookings} count={rooms} />
+        <hr />
+        <TypeView Img={data[1].img} type={data[1].name} updateBookings={this.updateBookings} count={adults} />
+        <hr />
+        <TypeView Img={data[2].img} type={data[2].name} updateBookings={this.updateBookings} count={children} />
       </div>
     )
   }

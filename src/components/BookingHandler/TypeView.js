@@ -5,15 +5,22 @@ import styles from './TypeView.module.css'
 import Button from "./Button"
 
 const TypeView = (props) => {
-  const { Img, type, getCounter } = props
+  const { Img, type, updateBookings, count } = props
+
+  const handleClick = (method) => () => {
+    console.log(type, method)
+    updateBookings({type, method})
+  }
+
+
   return (
     <div className={styles.typeView}>
       <span className={styles.image}><Img /></span>
       <span className={styles.type}>{type}</span>
       <div className={styles.buttonContainer}>
-        <Button color="red"> <FaMinusCircle /> </Button>
-        <span>1</span>
-        <Button color="blue"><FaPlusCircle /></Button>
+        <Button color="red" onClick={handleClick("sub")} > <FaMinusCircle /> </Button>
+        <span>{count}</span>
+        <Button color="blue" onClick={handleClick("add")}><FaPlusCircle /></Button>
       </div>
     </div>
   )
