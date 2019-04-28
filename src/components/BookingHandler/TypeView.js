@@ -8,7 +8,6 @@ const TypeView = (props) => {
   const { Img, type, updateBookings, count } = props
 
   const handleClick = (method) => () => {
-    console.log(type, method)
     updateBookings({type, method})
   }
 
